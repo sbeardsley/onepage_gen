@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "crewai_template"
+name = "onepage_gen"
 version = "0.1.0"
 description = ""
 authors = ["Scott Beardsley <scott@beards.ly>"]

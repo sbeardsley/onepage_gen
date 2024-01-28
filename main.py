@@ -7,21 +7,13 @@ from textwrap import dedent
 from agents import CustomAgents
 from tasks import CustomTasks
 
-from langchain_community.tools import DuckDuckGoSearchRun
-
-search_tool = DuckDuckGoSearchRun()
-
-os.environ["OPENAI_API_KEY"] = Config.OPENAI_API_KEY
-os.environ["OPENAI_ORGANIZATION"] = Config.OPENAI_ORGANIZATION_ID
-
-# This is the main class that you will use to define your custom crew.
-# You can define as many agents and tasks as you want in agents.py and tasks.py
+# os.environ["OPENAI_API_KEY"] = Config.OPENAI_API_KEY
+# os.environ["OPENAI_ORGANIZATION"] = Config.OPENAI_ORGANIZATION_ID
 
 
 class CustomCrew:
-    def __init__(self, var1, var2):
-        self.var1 = var1
-        self.var2 = var2
+    def __init__(self, topic):
+        self.topic = topic
 
     def run(self):
         # Define your custom agents and tasks in agents.py and tasks.py
@@ -29,24 +21,24 @@ class CustomCrew:
         tasks = CustomTasks()
 
         # Define your custom agents and tasks here
-        custom_agent_1 = agents.agent_1_name()
-        custom_agent_2 = agents.agent_2_name()
+        research_analyst = agents.research_analyst(self.topic)
+        marketing_specialist = agents.marketing_specialist()
 
         # Custom tasks include agent name and variables as input
-        custom_task_1 = tasks.task_1_name(
-            custom_agent_1,
-            self.var1,
-            self.var2,
+        do_research = tasks.research(
+            research_analyst,
+            self.topic,
         )
 
-        custom_task_2 = tasks.task_2_name(
-            custom_agent_2,
+        write_the_report = tasks.write_report(
+            marketing_specialist,
+            self.topic
         )
 
         # Define your custom crew here
         crew = Crew(
-            agents=[custom_agent_1, custom_agent_2],
-            tasks=[custom_task_1, custom_task_2],
+            agents=[research_analyst, marketing_specialist],
+            tasks=[do_research, write_the_report],
             verbose=True,
         )
 
@@ -58,10 +50,9 @@ class CustomCrew:
 if __name__ == "__main__":
     print("## Welcome to Crew AI Template")
     print("-------------------------------")
-    var1 = input(dedent("""Enter variable 1: """))
-    var2 = input(dedent("""Enter variable 2: """))
+    topic = input(dedent("""Enter a topic: """))
 
-    custom_crew = CustomCrew(var1, var2)
+    custom_crew = CustomCrew(topic)
     result = custom_crew.run()
     print("\n\n########################")
     print("## Here is you custom crew run result:")
