@@ -21,10 +21,16 @@ class CustomCrew:
         tasks = CustomTasks()
 
         # Define your custom agents and tasks here
+        chief_technology_officer = agents.chief_technology_officer()
         research_analyst = agents.research_analyst(self.topic)
         marketing_specialist = agents.marketing_specialist()
 
         # Custom tasks include agent name and variables as input
+        cto_task = tasks.cto_task(
+            chief_technology_officer,
+            self.topic,
+        )
+
         do_research = tasks.research(
             research_analyst,
             self.topic,
@@ -32,13 +38,14 @@ class CustomCrew:
 
         write_the_report = tasks.write_report(
             marketing_specialist,
-            self.topic
+            "Board of Directors",
+            self.topic,
         )
 
         # Define your custom crew here
         crew = Crew(
-            agents=[research_analyst, marketing_specialist],
-            tasks=[do_research, write_the_report],
+            agents=[chief_technology_officer, research_analyst, marketing_specialist],
+            tasks=[cto_task, do_research, write_the_report, ],
             verbose=True,
         )
 

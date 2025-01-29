@@ -22,6 +22,17 @@ class CustomAgents:
             verbose=True,
             llm=self.Ollama,
         )
+    
+    def chief_technology_officer(self):
+        return Agent(
+            role="Chief Technology Officer",
+            backstory=dedent(f"""Seasoned technology executive with a deep understanding of the latest technological trends and innovations. Responsible for setting the company's technical vision and leading all aspects of the company's technology development. Oversee the development and implementation of technology solutions that align with the company's business goals. Collaborate with other executives to ensure that the technology strategy supports the company's overall mission and objectives. Lead a team of technology professionals and provide guidance and direction to drive innovation and operational excellence"""),
+            goal=dedent(f"""Effectively communicate the benefits and features of technology products or solutions in a compelling and easily understandable manner to the board of directors."""),
+            # tools=[tool_1, tool_2],
+            allow_delegation=True,
+            verbose=True,
+            llm=self.Ollama,
+        )
 
     def marketing_specialist(self):
         return Agent(
